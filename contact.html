@@ -1,0 +1,239 @@
+<!doctype html>
+<html><!-- InstanceBegin template="/Templates/base.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="images/favicon.ico">
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>STCSPA</title>
+<!-- InstanceEndEditable -->
+<link rel="stylesheet" href="css/reset.css">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/hover-min.css">
+<link rel="stylesheet" href="css/hamburger-menu.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+<script src="js/hamburger-menu.js"></script> 
+
+<!--slideshow--> 
+<script>
+$(function(){
+    let setElm = $('.loopSlider'),
+    moveInterval = 1,
+    slideTimeBase = 10,
+    spWidth = 768,
+    spSpeed = 2;
+ 
+    $(window).on('load', function(){
+        setElm.each(function(){
+            let self = $(this),
+            selfWidth = self.innerWidth(),
+            findUl = self.find('ul'),
+            findLi = findUl.find('li'),
+            findLink = findLi.find('a'),
+            listCount = findLi.length;
+ 
+            listWidth = findLi.outerWidth();
+            loopWidth = listWidth * listCount;
+ 
+            findUl.wrapAll('<div class="loopSliderWrap" />');
+            let selfWrap = self.find('.loopSliderWrap');
+ 
+            setElm.css({visibility:'visible',opacity:'0'}).animate({opacity:'1'},500);
+ 
+            if(loopWidth > selfWidth){
+                findUl.css({width:loopWidth}).clone().appendTo(selfWrap).clone().prependTo(selfWrap);
+ 
+                selfWrap.css({left:'-' + loopWidth + 'px'});
+ 
+                setSlideTime();
+                timerLeft();
+ 
+                $(window).on('resize', function(){
+                    clearInterval(setTimer);
+                    setSlideTime();
+                    timerLeft();
+                }).resize();
+ 
+                function setSlideTime() {
+                    if(window.innerWidth > spWidth){
+                        slideTime = slideTimeBase;
+                    } else {
+                        slideTime = slideTimeBase*spSpeed;
+                    }
+                }
+ 
+                function timerLeft(){
+                    setTimer = setInterval(function(){loopPositionLeft()},slideTime);
+                };
+ 
+                function loopPositionLeft(){
+                    listWidth = findLi.outerWidth();
+                    loopWidth = listWidth * listCount;
+ 
+                    self.find('ul').css({width:loopWidth});
+                    selfWrap.css({width:loopWidth*3}).stop().animate({left:'-=' + (moveInterval) + 'px'},slideTime,'linear',function(){
+                        let posLeft = parseInt(selfWrap.css('left')),
+                        widthCal = (loopWidth)-((loopWidth)*3);
+                        if (posLeft <= widthCal) {
+                            let calCat = posLeft - widthCal;
+                            //alert(calCat)
+                            selfWrap.css({left:'-' + (loopWidth - calCat) + 'px'});
+                        }
+                    });
+                    return false;
+                };
+ 
+                function myHandler(e){
+                    e.preventDefault();
+                }
+ 
+                let isTouch = ('ontouchstart' in window),
+                ua = navigator.userAgent;
+ 
+                selfWrap.on({
+                    'touchstart mousedown': function(e){
+                        if(!(ua.search(/iPhone/) != -1 || ua.search(/iPad/) != -1 || ua.search(/Macintosh/) != -1 && 'ontouchend' in document || ua.search(/iPod/) != -1 || ua.search(/Android/) != -1)){
+                            e.preventDefault();
+                            $(this).find('a').off('click', myHandler);
+                        }
+                        if(selfWrap.is(':animated')){
+                            clearInterval(setTimer);
+                        }
+                        this.pageX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
+                        this.leftBegin = parseInt($(this).css('left'));
+                        this.left = parseInt($(this).css('left'));
+                        this.touched = true;
+                    },
+                    'touchmove mousemove': function(e){
+                        if(!this.touched){return;}
+                        if(!(ua.search(/iPhone/) != -1 || ua.search(/iPad/) != -1 || ua.search(/Macintosh/) != -1 && 'ontouchend' in document || ua.search(/iPod/) != -1 || ua.search(/Android/) != -1)){
+                            e.preventDefault();
+                            $(this).find('a').on('click', myHandler);
+                        }
+                        if(selfWrap.is(':animated')){
+                            clearInterval(setTimer);
+                        }
+                        this.left = this.left - (this.pageX - (isTouch ? event.changedTouches[0].pageX : e.pageX) );
+                        this.pageX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
+                        $(this).css({left:this.left});
+                    },
+                    'touchend mouseup mouseout': function(e){
+                        if (!this.touched) {return;}
+                        this.touched = false;
+ 
+                        outLeft = parseInt($(this).css('left'));
+                        if(outLeft < (loopWidth)-((loopWidth)*3)){
+                            $(this).css({left: outLeft - (loopWidth-(loopWidth*2)) + 'px'});
+                        }
+                        if(outLeft > (loopWidth)-((loopWidth)*2)){
+                            $(this).css({left: outLeft + (loopWidth-(loopWidth*2)) + 'px'});
+                        }
+ 
+                        timerLeft();
+                        return false;
+                    }
+                });
+ 
+                if(ua.search(/iPhone/) != -1 || ua.search(/iPad/) != -1 || ua.search(/Macintosh/) != -1 && 'ontouchend' in document || ua.search(/iPod/) != -1 || ua.search(/Android/) != -1){
+                    selfWrap.find('a').on({
+                        'touchstart': function(e){
+                            thisHref = $(this).attr('href');
+                            thisTarget = $(this).attr('target');
+                            touchFlag = true;
+                        },
+                        'touchmove': function(e){
+                            touchFlag = false;
+                            e.preventDefault();
+                        },
+                        'touchend': function(e){
+                            if(touchFlag == true){
+                                if(thisTarget == '_blank'){
+                                    window.open(thisHref, '_blank');
+                                } else {
+                                    location.href = thisHref;
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    });
+});
+</script>
+<!-- InstanceBeginEditable name="head" -->
+<!-- InstanceEndEditable -->
+<!-- InstanceParam name="class" type="text" value="contact" -->
+</head>
+<body class="contact">
+<div class="page">
+  <header>
+    <h1><a href="index.html"><img src="images/logo.png" alt="spaのロゴ"></a></h1>
+    <p>MENU</p>
+    
+    <!-- ハンバーガーメニュー -->
+    <button class="hamburger-button"></button>
+    
+    <!-- ナビゲーション -->
+    <nav class="hamburger-nav">
+      <ul>
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="index.html#page-facility">FACILITY</a></li>
+        <li><a href="menu.html">MENU</a></li>
+        <li><a href="access.html">ACCESS</a></li>
+        <li><a class="hvr-sweep-to-right" href="contact.html">CONTACT</a></li>
+      </ul>
+    </nav>
+  </header>
+  <!-- InstanceBeginEditable name="メイン領域" -->
+  <main>
+    <h2>CONTACT</h2>
+    <p class="description">お問い合わせ</p>
+    <div class="container">
+      <div class="contact-box">
+        <h3>STC SPAに関する質問や予約は、こちらのフォーム<br>
+          よりお問い合わせください</h3>
+        <div class="form">
+          <form>
+            <p><label>会社名(任意）<br>
+                <input type="text" name="name" ></label></p>
+            <p><label>氏名（必須）<br>
+                <input type="text" name="name" required></label></p>
+            <p><label>メールアドレス（必須）<br>
+                <input type="email" name="mail" required></label></p>
+            <p><label>件名<br>
+                <select>
+                  <option>お問い合わせ</option>
+                  <option>予約する(ボディ、フェイシャル、ボディトリートメント)</option>
+                  <option>送迎バス予約</option>
+                </select>
+              </label></p>
+            <p><label>メッセージ<br>
+                <textarea name="comment"></textarea>
+              </label></p>
+            <p><input type="submit" value="送信する"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- InstanceEndEditable -->
+  <footer>
+    <h1><a href="index.html"><img src="images/logo.png" alt="スパのロゴ"></a></h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="index.html#page-facility">FACILITY</a></li>
+        <li><a href="menu.html">MENU</a></li>
+        <li><a href="access.html">ACCESS</a></li>
+      </ul>
+    </nav>
+    <div class="tail">
+      <p><small>&copy;<span>2020</span> STC SPA</small></p>
+      <div class="button"><a class="hvr-sweep-to-right" href="contact.html">CONTACT</a> </div>
+    </div>
+  </footer>
+</div>
+</body>
+<!-- InstanceEnd --></html>

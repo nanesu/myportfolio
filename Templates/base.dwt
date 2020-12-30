@@ -1,0 +1,270 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="../images/favicon.ico">
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>STCSPA</title>
+<!-- TemplateEndEditable -->
+<link rel="stylesheet" href="../css/reset.css">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/hover-min.css">
+<link rel="stylesheet" href="../css/hamburger-menu.css">
+<link rel="stylesheet" href="../css/style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+<script src="../js/hamburger-menu.js"></script> 
+
+<!--slideshow--> 
+<script>
+$(function(){
+    let setElm = $('.loopSlider'),
+    moveInterval = 1,
+    slideTimeBase = 10,
+    spWidth = 768,
+    spSpeed = 2;
+ 
+    $(window).on('load', function(){
+        setElm.each(function(){
+            let self = $(this),
+            selfWidth = self.innerWidth(),
+            findUl = self.find('ul'),
+            findLi = findUl.find('li'),
+            findLink = findLi.find('a'),
+            listCount = findLi.length;
+ 
+            listWidth = findLi.outerWidth();
+            loopWidth = listWidth * listCount;
+ 
+            findUl.wrapAll('<div class="loopSliderWrap" />');
+            let selfWrap = self.find('.loopSliderWrap');
+ 
+            setElm.css({visibility:'visible',opacity:'0'}).animate({opacity:'1'},500);
+ 
+            if(loopWidth > selfWidth){
+                findUl.css({width:loopWidth}).clone().appendTo(selfWrap).clone().prependTo(selfWrap);
+ 
+                selfWrap.css({left:'-' + loopWidth + 'px'});
+ 
+                setSlideTime();
+                timerLeft();
+ 
+                $(window).on('resize', function(){
+                    clearInterval(setTimer);
+                    setSlideTime();
+                    timerLeft();
+                }).resize();
+ 
+                function setSlideTime() {
+                    if(window.innerWidth > spWidth){
+                        slideTime = slideTimeBase;
+                    } else {
+                        slideTime = slideTimeBase*spSpeed;
+                    }
+                }
+ 
+                function timerLeft(){
+                    setTimer = setInterval(function(){loopPositionLeft()},slideTime);
+                };
+ 
+                function loopPositionLeft(){
+                    listWidth = findLi.outerWidth();
+                    loopWidth = listWidth * listCount;
+ 
+                    self.find('ul').css({width:loopWidth});
+                    selfWrap.css({width:loopWidth*3}).stop().animate({left:'-=' + (moveInterval) + 'px'},slideTime,'linear',function(){
+                        let posLeft = parseInt(selfWrap.css('left')),
+                        widthCal = (loopWidth)-((loopWidth)*3);
+                        if (posLeft <= widthCal) {
+                            let calCat = posLeft - widthCal;
+                            //alert(calCat)
+                            selfWrap.css({left:'-' + (loopWidth - calCat) + 'px'});
+                        }
+                    });
+                    return false;
+                };
+ 
+                function myHandler(e){
+                    e.preventDefault();
+                }
+ 
+                let isTouch = ('ontouchstart' in window),
+                ua = navigator.userAgent;
+ 
+                selfWrap.on({
+                    'touchstart mousedown': function(e){
+                        if(!(ua.search(/iPhone/) != -1 || ua.search(/iPad/) != -1 || ua.search(/Macintosh/) != -1 && 'ontouchend' in document || ua.search(/iPod/) != -1 || ua.search(/Android/) != -1)){
+                            e.preventDefault();
+                            $(this).find('a').off('click', myHandler);
+                        }
+                        if(selfWrap.is(':animated')){
+                            clearInterval(setTimer);
+                        }
+                        this.pageX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
+                        this.leftBegin = parseInt($(this).css('left'));
+                        this.left = parseInt($(this).css('left'));
+                        this.touched = true;
+                    },
+                    'touchmove mousemove': function(e){
+                        if(!this.touched){return;}
+                        if(!(ua.search(/iPhone/) != -1 || ua.search(/iPad/) != -1 || ua.search(/Macintosh/) != -1 && 'ontouchend' in document || ua.search(/iPod/) != -1 || ua.search(/Android/) != -1)){
+                            e.preventDefault();
+                            $(this).find('a').on('click', myHandler);
+                        }
+                        if(selfWrap.is(':animated')){
+                            clearInterval(setTimer);
+                        }
+                        this.left = this.left - (this.pageX - (isTouch ? event.changedTouches[0].pageX : e.pageX) );
+                        this.pageX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
+                        $(this).css({left:this.left});
+                    },
+                    'touchend mouseup mouseout': function(e){
+                        if (!this.touched) {return;}
+                        this.touched = false;
+ 
+                        outLeft = parseInt($(this).css('left'));
+                        if(outLeft < (loopWidth)-((loopWidth)*3)){
+                            $(this).css({left: outLeft - (loopWidth-(loopWidth*2)) + 'px'});
+                        }
+                        if(outLeft > (loopWidth)-((loopWidth)*2)){
+                            $(this).css({left: outLeft + (loopWidth-(loopWidth*2)) + 'px'});
+                        }
+ 
+                        timerLeft();
+                        return false;
+                    }
+                });
+ 
+                if(ua.search(/iPhone/) != -1 || ua.search(/iPad/) != -1 || ua.search(/Macintosh/) != -1 && 'ontouchend' in document || ua.search(/iPod/) != -1 || ua.search(/Android/) != -1){
+                    selfWrap.find('a').on({
+                        'touchstart': function(e){
+                            thisHref = $(this).attr('href');
+                            thisTarget = $(this).attr('target');
+                            touchFlag = true;
+                        },
+                        'touchmove': function(e){
+                            touchFlag = false;
+                            e.preventDefault();
+                        },
+                        'touchend': function(e){
+                            if(touchFlag == true){
+                                if(thisTarget == '_blank'){
+                                    window.open(thisHref, '_blank');
+                                } else {
+                                    location.href = thisHref;
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    });
+});
+</script>
+<!-- TemplateBeginEditable name="head" -->
+<!-- TemplateEndEditable -->
+<!-- TemplateParam name="class" type="text" value="home" -->
+</head>
+<body class="@@(_document['class'])@@">
+<div class="page">
+  <header>
+    <h1><a href="../index.html"><img src="../images/logo.png" alt="spaのロゴ"></a></h1>
+    <p>MENU</p>
+    
+    <!-- ハンバーガーメニュー -->
+    <button class="hamburger-button"></button>
+    
+    <!-- ナビゲーション -->
+    <nav class="hamburger-nav">
+      <ul>
+        <li><a href="../index.html">HOME</a></li>
+        <li><a href="index.html#page-facility">FACILITY</a></li>
+        <li><a href="../menu.html">MENU</a></li>
+        <li><a href="../access.html">ACCESS</a></li>
+        <li><a class="hvr-sweep-to-right" href="../contact.html">CONTACT</a></li>
+      </ul>
+    </nav>
+  </header>
+  <!-- TemplateBeginEditable name="メイン領域" -->
+  <main>
+    <div class="catch">
+      <h2>It makes you feel better</h2>
+      <p class="phrase">あなたを癒す</p>
+      <p> 海に囲まれた自然豊かな沖縄へ<br>
+        リゾート気分を贅沢に味わおう<br>
+        一生忘れられない思い出を<br>
+        ここで </p>
+    </div>
+    <div class="about">
+      <div class="introduce">
+        <h2>About Spa</h2>
+        <p class="spa">Spaについて</p>
+        <p>HOTEL STCは、美しい海に隣接したリゾ<br>
+          ート地です。周辺にはアメリカンビレッ<br>
+          ジやレストラン、カフェといった娯楽施<br>
+          設がたくさんあります。<br>
+          STC Spaはホテル敷地内にあるため、い<br>
+          つでもゆっくりと贅沢な休暇を楽しむこ<br>
+          とができます。</p>
+      </div>
+      <div class="hotel"><img src="../images/hotel.jpg" alt="リゾートホテルの写真">
+        <div class="spa-entrance"><img src="../images/spa-entrance.jpg" alt="スパの入り口の写真"></div>
+      </div>
+    </div>
+    <div class="shisetu">
+      <h3><a id="page-facility">Facilities</a></h3>
+      <p class="description">施設</p>
+      <p>STC SPAは、美しい客室、ダイニングSTC Terrace、ジャグジー付き温水プール、サウナ、トリートメントルームが完備されています。</p>
+      <section> <img src="../images/treatment-room.jpg" alt="トリートメント室">
+        <h4>Treatment room</h4>
+        <p class="shisetu-image">トリートメント室</p>
+      </section>
+      <section> <img src="../images/jacuzzi.jpg" alt="ジャグジー付き温水プール">
+        <h4>Pool,Jaccuzzi</h4>
+        <p class="shisetu-image">温水プール、ジャグジー</p>
+      </section>
+      <section> <img src="../images/sauna.jpg" alt="サウナ">
+        <h4>Sauna</h4>
+        <p class="shisetu-image">サウナ</p>
+      </section>
+      <div class="booking"><a class="hvr-sweep-to-right" href="../contact.html">予約する</a> </div>
+    </div>
+    <div class="keiken">
+      <h3>Experience</h3>
+      <p class="description">経験</p>
+      <!--スライドショー-->
+      <div class="loopSlider">
+        <ul>
+          <li><img src="images/slidshow-spa.jpg" alt="スパの写真"></li>
+          <li><img src="images/slideshow-sauna.jpg" alt="サウナの写真"></li>
+          <li><img src="images/slidshow-aroma.jpg" alt="アロマの写真"></li>
+          <li><img src="images/slidshow-footspa.jpg" alt="フットスパの写真"></li>
+          <li><img src="images/slidshow-towle.jpg" alt="アメニティーの写真"></li>
+          <li><img src="images/slidshow-pool.jpg" alt="プールの写真"></li>
+          <li><img src="images/slidshow-relax.jpg" alt="リラックスの写真"></li>
+        </ul>
+      </div>
+    </div>
+    <!--/.loopSlider--> 
+    
+  </main>
+  <!-- TemplateEndEditable -->
+  <footer>
+    <h1><a href="../index.html"><img src="../images/logo.png" alt="スパのロゴ"></a></h1>
+    <nav>
+      <ul>
+        <li><a href="../index.html">HOME</a></li>
+        <li><a href="index.html#page-facility">FACILITY</a></li>
+        <li><a href="../menu.html">MENU</a></li>
+        <li><a href="../access.html">ACCESS</a></li>
+      </ul>
+    </nav>
+    <div class="tail">
+      <p><small>&copy;<span>2020</span> STC SPA</small></p>
+      <div class="button"><a class="hvr-sweep-to-right" href="../contact.html">CONTACT</a> </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

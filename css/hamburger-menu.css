@@ -1,0 +1,77 @@
+@charset "utf-8";
+/* CSS Document */
+
+.hamburger-button {
+  display: flex; /* media query時にはflexでもどして */
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1002;
+  background-color:#15161a;
+  border: 1px solid #252525;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  outline: none;
+  border-radius: 50%;
+}
+.hamburger-button svg {
+  height: 25px; /* autoではなく同じ数字で */
+  width: 25px; /* autoではなく同じ数字で */
+}
+.hamburger-button path {
+  fill: #fff;
+}
+.hamburger-nav {
+  position: fixed;
+  width: 100%;
+  background-color: rgba(15,16,11,0.8);
+  z-index: 1001;
+  padding: 20px;
+  display: none;
+}
+#hamburger-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(15,16,11,0.8);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 1000;
+}
+.hamburger-nav ul{
+  float:right;
+  margin-right: 150px;
+  font-size: 58px;
+  margin-top: 155px;
+  margin-bottom: 30px;
+  text-align: right;
+}
+.hamburger-nav li{
+  
+  margin-bottom: 45px;
+}
+.hamburger-nav a{
+  text-decoration: none;
+  color: #fff;
+  display: block;
+}
+.hamburger-nav li:last-child{
+  text-align: center;
+  font-size: 13px;
+  width: 100px;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 2px;
+  margin-left: auto;
+  margin-top: 75px;
+  background-color: #73674C;
+  display: block;
+}
+.hamburger-button{
+  position: fixed;
+}
