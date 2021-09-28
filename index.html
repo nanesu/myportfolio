@@ -7,19 +7,164 @@
 <title>STCSPA</title>
 <!-- InstanceEndEditable -->
 <link rel="stylesheet" href="css/reset.css">
-<!-- slick -->
-<link rel="stylesheet" type="text/css" href="css/slick.css"/>
-<link rel="stylesheet" type="text/css" href="css/slick-theme.css"/>
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/hover-min.css">
 <link rel="stylesheet" href="css/hamburger-menu.css">
-
 <link rel="stylesheet" href="css/style.css">
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
 <script src="js/hamburger-menu.js"></script> 
 
-
+<!--slideshow--> 
+<script>
+$(function(){
+    let setElm = $('.loopSlider'),
+    moveInterval = 1,
+    slideTimeBase = 10,
+    spWidth = 768,
+    spSpeed = 2;
+ 
+    $(window).on('load', function(){
+        setElm.each(function(){
+            let self = $(this),
+            selfWidth = self.innerWidth(),
+            findUl = self.find('ul'),
+            findLi = findUl.find('li'),
+            findLink = findLi.find('a'),
+            listCount = findLi.length;
+ 
+            listWidth = findLi.outerWidth();
+            loopWidth = listWidth * listCount;
+ 
+            findUl.wrapAll('<div class="loopSliderWrap" />');
+            let selfWrap = self.find('.loopSliderWrap');
+ 
+            setElm.css({visibility:'visible',opacity:'0'}).animate({opacity:'1'},500);
+ 
+            if(loopWidth > selfWidth){
+                findUl.css({width:loopWidth}).clone().appendTo(selfWrap).clone().prependTo(selfWrap);
+ 
+                selfWrap.css({left:'-' + loopWidth + 'px'});
+ 
+                setSlideTime();
+                timerLeft();
+ 
+                $(window).on('resize', function(){
+                    clearInterval(setTimer);
+                    setSlideTime();
+                    timerLeft();
+                }).resize();
+ 
+                function setSlideTime() {
+                    if(window.innerWidth > spWidth){
+                        slideTime = slideTimeBase;
+                    } else {
+                        slideTime = slideTimeBase*spSpeed;
+                    }
+                }
+ 
+                function timerLeft(){
+                    setTimer = setInterval(function(){loopPositionLeft()},slideTime);
+                };
+ 
+                function loopPositionLeft(){
+                    listWidth = findLi.outerWidth();
+                    loopWidth = listWidth * listCount;
+ 
+                    self.find('ul').css({width:loopWidth});
+                    selfWrap.css({width:loopWidth*3}).stop().animate({left:'-=' + (moveInterval) + 'px'},slideTime,'linear',function(){
+                        let posLeft = parseInt(selfWrap.css('left')),
+                        widthCal = (loopWidth)-((loopWidth)*3);
+                        if (posLeft <= widthCal) {
+                            let calCat = posLeft - widthCal;
+                            //alert(calCat)
+                            selfWrap.css({left:'-' + (loopWidth - calCat) + 'px'});
+                        }
+                    });
+                    return false;
+                };
+ 
+                function myHandler(e){
+                    e.preventDefault();
+                }
+ 
+                let isTouch = ('ontouchstart' in window),
+                ua = navigator.userAgent;
+ 
+                selfWrap.on({
+                    'touchstart mousedown': function(e){
+                        if(!(ua.search(/iPhone/) != -1 || ua.search(/iPad/) != -1 || ua.search(/Macintosh/) != -1 && 'ontouchend' in document || ua.search(/iPod/) != -1 || ua.search(/Android/) != -1)){
+                            e.preventDefault();
+                            $(this).find('a').off('click', myHandler);
+                        }
+                        if(selfWrap.is(':animated')){
+                            clearInterval(setTimer);
+                        }
+                        this.pageX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
+                        this.leftBegin = parseInt($(this).css('left'));
+                        this.left = parseInt($(this).css('left'));
+                        this.touched = true;
+                    },
+                    'touchmove mousemove': function(e){
+                        if(!this.touched){return;}
+                        if(!(ua.search(/iPhone/) != -1 || ua.search(/iPad/) != -1 || ua.search(/Macintosh/) != -1 && 'ontouchend' in document || ua.search(/iPod/) != -1 || ua.search(/Android/) != -1)){
+                            e.preventDefault();
+                            $(this).find('a').on('click', myHandler);
+                        }
+                        if(selfWrap.is(':animated')){
+                            clearInterval(setTimer);
+                        }
+                        this.left = this.left - (this.pageX - (isTouch ? event.changedTouches[0].pageX : e.pageX) );
+                        this.pageX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
+                        $(this).css({left:this.left});
+                    },
+                    'touchend mouseup mouseout': function(e){
+                        if (!this.touched) {return;}
+                        this.touched = false;
+ 
+                        outLeft = parseInt($(this).css('left'));
+                        if(outLeft < (loopWidth)-((loopWidth)*3)){
+                            $(this).css({left: outLeft - (loopWidth-(loopWidth*2)) + 'px'});
+                        }
+                        if(outLeft > (loopWidth)-((loopWidth)*2)){
+                            $(this).css({left: outLeft + (loopWidth-(loopWidth*2)) + 'px'});
+                        }
+ 
+                        timerLeft();
+                        return false;
+                    }
+                });
+ 
+                if(ua.search(/iPhone/) != -1 || ua.search(/iPad/) != -1 || ua.search(/Macintosh/) != -1 && 'ontouchend' in document || ua.search(/iPod/) != -1 || ua.search(/Android/) != -1){
+                    selfWrap.find('a').on({
+                        'touchstart': function(e){
+                            thisHref = $(this).attr('href');
+                            thisTarget = $(this).attr('target');
+                            touchFlag = true;
+                        },
+                        'touchmove': function(e){
+                            touchFlag = false;
+                            e.preventDefault();
+                        },
+                        'touchend': function(e){
+                            if(touchFlag == true){
+                                if(thisTarget == '_blank'){
+                                    window.open(thisHref, '_blank');
+                                } else {
+                                    location.href = thisHref;
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    });
+});
+</script>
+<!-- InstanceBeginEditable name="head" -->
+<!-- InstanceEndEditable -->
+<!-- InstanceParam name="class" type="text" value="home" -->
 </head>
 <body class="home">
 <div class="page">
@@ -89,22 +234,23 @@
       <div class="keiken">
         <h3>Experience</h3>
         <p class="description">経験</p>
-      </div>
+        
         <!--スライドショー-->
-        <div class="slider">
-         
-            <div class="image"><img src="images/slidshow-spa.jpg" alt="スパの写真"></div>
-            <div class="image"><img src="images/slideshow-sauna.jpg" alt="サウナの写真"></div>
-            <div class="image"><img src="images/slidshow-footspa.jpg" alt="フットスパの写真"></div>
-            <div class="image"><img src="images/slidshow-towle.jpg" alt="アメニティーの写真"></div>
-            <div class="image"><img src="images/slidshow-pool.jpg" alt="プールの写真"></div>
-            <div class="image"><img src="images/slidshow-relax.jpg" alt="リラックスの写真"></div>
-    
+        <div class="loopSlider">
+          <ul>
+            <li><a href="images/slidshow-spa.jpg"><img src="images/slidshow-spa.jpg" alt="スパの写真"></a></li>
+            <li><a href="images/slideshow-sauna.jpg"><img src="images/slideshow-sauna.jpg" alt="サウナの写真"></a></li>
+            <li><a href="images/slidshow-aroma.jpg"><img src="images/slidshow-aroma.jpg" alt="アロマの写真"></a></li>
+            <li><a href="images/slidshow-footspa.jpg"><img src="images/slidshow-footspa.jpg" alt="フットスパの写真"></a></li>
+            <li><a href="images/slidshow-towle.jpg"><img src="images/slidshow-towle.jpg" alt="アメニティーの写真"></a></li>
+            <li><a href="images/slidshow-pool.jpg"><img src="images/slidshow-pool.jpg" alt="プールの写真"></a></li>
+            <li><a href="images/slidshow-relax.jpg"><img src="images/slidshow-relax.jpg" alt="リラックスの写真"></a></li>
+          </ul>
         </div>
         <!--/.loopSlider--> 
         
       </div>
-    
+    </div>
   </main>
   <!-- InstanceEndEditable -->
   <footer>
@@ -123,31 +269,5 @@
     </div>
   </footer>
 </div>
-
-
-<script src="js/slick.min.js"></script>
-<!--slideshow--> 
-<script type="text/javascript">
-   $(document).ready(function(){
-  $('.slider').slick({
-    dots:true,
-    autoplay: true, //自動でスクロール
-    autoplaySpeed: 0, //自動再生のスライド切り替えまでの時間を設定
-    speed: 5000, //スライドが流れる速度を設定
-    cssEase: "linear", //スライドの流れ方を等速に設定
-    slidesToShow: 4, //表示するスライドの数
-    swipe: false, // 操作による切り替えはさせない
-    arrows: false, //矢印非表示
-    pauseOnFocus: false, //スライダーをフォーカスした時にスライドを停止させるか
-    pauseOnHover: false, //スライダーにマウスホバーした時にスライドを停止させるか
-  });
-});
-  </script>
-  <!-- InstanceBeginEditable name="head" -->
-  <!-- InstanceEndEditable -->
-  <!-- InstanceParam name="class" type="text" value="home" -->
-
-
-
 </body>
 <!-- InstanceEnd --></html>

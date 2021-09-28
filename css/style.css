@@ -51,7 +51,7 @@ header p {
 /*ーーーーーーーーーーーーーーーー
 メイン
 ーーーーーーーーーーーーーーーーーーー*/
-
+main {}
 .home main .catch {
   width: 350px;
   height: 400px;
@@ -179,7 +179,7 @@ header p {
 .home main .shisetu .booking a {
   display: block;
 }
-
+.home main .keiken {}
 .home main .keiken hr {
   width: 215px;
   margin-bottom: 60px;
@@ -213,25 +213,52 @@ header p {
 /* ------------------------------
    loopSlider
 ------------------------------ */
-.slider{
-width: auto;
+.loopSliderWrap {
+  top: 0;
+  left: 0;
+  height: 300px;
+  overflow: hidden;
+  position: absolute;
 }
-.slider .image {
-  width:auto;
-  height: 280px;
-
+.loopSliderWrap:after {
+  content: "";
+  display: block;
+  clear: both;
 }
-.slider .image img{
+.loopSlider {
+  margin: 0 auto;
+  width: 100%;
+  height: 300px;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  visibility: hidden;
+  margin-bottom: 300px;
+}
+.loopSlider ul {
+  height: 300px;
+  float: left;
+  overflow: hidden;
+}
+.loopSlider ul li {
+  width: 300px;
+  height: 300px;
+  float: left;
+  overflow: hidden;
+}
+.loopSlider ul li img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  
 }
-
-
-
-
-
+@media only screen and (max-width: 768px) {
+  .loopSliderWrap, .loopSlider, .loopSlider ul {
+    height: 100px;
+  }
+  .loopSlider ul li {
+    width: 100px;
+    height: 100px;
+  }
+}
 /*ーーーーーーーーーーーーーーーー
 フッター
 ーーーーーーーーーーーーーーーーーーー*/
@@ -239,7 +266,6 @@ footer {
   height: 260px;
   border-top: 1px solid #252525;
   overflow: hidden;
-  margin-top: 150px;
 }
 footer h1 {
   float: left;
