@@ -1,21 +1,23 @@
 <!doctype html>
-<html><!-- InstanceBegin template="/Templates/base.dwt" codeOutsideHTMLIsLocked="false" -->
-<head>
+<html><!-- InstanceBegin template="/Templates/base.dwt" codeOutsideHTMLIsLocked="false" --><head>
 <meta charset="UTF-8">
-<link rel="icon" href="images/favicon.ico">
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>STCSPA</title>
 <!-- InstanceEndEditable -->
 <link rel="stylesheet" href="css/reset.css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/hover-min.css">
+<link rel="stylesheet" href="css/hover-min.css"> 
 <link rel="stylesheet" href="css/hamburger-menu.css">
 <link rel="stylesheet" href="css/style.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
-<script src="js/hamburger-menu.js"></script> 
 
-<!--slideshow--> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="js/hamburger-menu.js"></script>  
+  
+  
+ 
+ <!--slideshow-->
 <script>
 $(function(){
     let setElm = $('.loopSlider'),
@@ -162,6 +164,12 @@ $(function(){
     });
 });
 </script>
+  
+  
+  
+  
+  
+  
 <!-- InstanceBeginEditable name="head" -->
 <!-- InstanceEndEditable -->
 <!-- InstanceParam name="class" type="text" value="home" -->
@@ -170,24 +178,35 @@ $(function(){
 <div class="page">
   <header>
     <h1><a href="index.html"><img src="images/logo.png" alt="spaのロゴ"></a></h1>
-    <p>MENU</p>
     
-    <!-- ハンバーガーメニュー -->
-    <button class="hamburger-button"></button>
+      <p>MENU</p>
+     
+   <!-- ハンバーガーメニュー -->
+<button class="hamburger-button"></button>
+
+<!-- ナビゲーション -->
+<nav class="hamburger-nav">
+  <ul>
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="index.html#page-facility">FACILITY</a></li>
+    <li><a href="menu.html">MENU</a></li>
+    <li><a href="access.html">ACCESS</a></li>
+    <li><a class="hvr-sweep-to-right" href="contact.html">CONTACT</a></li>
+  </ul>
+</nav>
     
-    <!-- ナビゲーション -->
-    <nav class="hamburger-nav">
-      <ul>
-        <li><a href="index.html">HOME</a></li>
-        <li><a href="index.html#page-facility">FACILITY</a></li>
-        <li><a href="menu.html">MENU</a></li>
-        <li><a href="access.html">ACCESS</a></li>
-        <li><a class="hvr-sweep-to-right" href="contact.html">CONTACT</a></li>
-      </ul>
-    </nav>
+    
+    
+    
+    
+    
+    
+    
+    
   </header>
   <!-- InstanceBeginEditable name="メイン領域" -->
   <main>
+    
     <div class="catch">
       <h2>It makes you feel better</h2>
       <p class="phrase">あなたを癒す</p>
@@ -197,61 +216,70 @@ $(function(){
         ここで </p>
     </div>
     <div class="inner">
-      <div class="about">
-        <div class="introduce">
-          <h2>About Spa</h2>
-          <p class="spa">Spaについて</p>
-          <p>HOTEL STCは、美しい海に隣接したリゾ<br>
-            ート地です。周辺にはアメリカンビレッ<br>
-            ジやレストラン、カフェといった娯楽施<br>
-            設がたくさんあります。<br>
-            STC Spaはホテル敷地内にあるため、い<br>
-            つでもゆっくりと贅沢な休暇を楽しむこ<br>
-            とができます。</p>
-        </div>
-        <div class="hotel"><img src="images/hotel.jpg" alt="リゾートホテルの写真">
-          <div class="spa-entrance"><img src="images/spa-entrance.jpg" alt="スパの入り口の写真"></div>
-        </div>
+    <div class="about">
+      <div class="introduce">
+        <h2>About Spa</h2>
+        <p class="spa">Spaについて</p>
+        <p>HOTEL STCは、美しい海に隣接したリゾ<br>
+          ート地です。周辺にはアメリカンビレッ<br>
+          ジやレストラン、カフェといった娯楽施<br>
+          設がたくさんあります。<br>
+          STC Spaはホテル敷地内にあるため、い<br>
+          つでもゆっくりと贅沢な休暇を楽しむこ<br>
+          とができます。</p>
       </div>
-      <div class="shisetu">
-        <h3><a id="page-facility">Facilities</a></h3>
-        <p class="description">施設</p>
-        <p>STC SPAは、美しい客室、ダイニングSTC Terrace、ジャグジー付き温水プール、サウナ、トリートメントルームが完備されています。</p>
-        <section > <img src="images/treatment-room.jpg" alt="トリートメント室">
-          <h4>Treatment room</h4>
-          <p class="shisetu-image">トリートメント室</p>
-        </section>
-        <section > <img src="images/jacuzzi.jpg" alt="ジャグジー付き温水プール">
-          <h4>Pool,Jaccuzzi</h4>
-          <p class="shisetu-image">温水プール、ジャグジー</p>
-        </section>
-        <section > <img src="images/sauna.jpg" alt="サウナ">
-          <h4>Sauna</h4>
-          <p class="shisetu-image">サウナ</p>
-        </section>
-        <div class="booking"><a class="hvr-sweep-to-right" href="contact.html">予約する</a></div>
-      </div>
-      <div class="keiken">
-        <h3>Experience</h3>
-        <p class="description">経験</p>
-        
-        <!--スライドショー-->
-        <div class="loopSlider">
-          <ul>
-            <li><a href="images/slidshow-spa.jpg"><img src="images/slidshow-spa.jpg" alt="スパの写真"></a></li>
-            <li><a href="images/slideshow-sauna.jpg"><img src="images/slideshow-sauna.jpg" alt="サウナの写真"></a></li>
-            <li><a href="images/slidshow-aroma.jpg"><img src="images/slidshow-aroma.jpg" alt="アロマの写真"></a></li>
-            <li><a href="images/slidshow-footspa.jpg"><img src="images/slidshow-footspa.jpg" alt="フットスパの写真"></a></li>
-            <li><a href="images/slidshow-towle.jpg"><img src="images/slidshow-towle.jpg" alt="アメニティーの写真"></a></li>
-            <li><a href="images/slidshow-pool.jpg"><img src="images/slidshow-pool.jpg" alt="プールの写真"></a></li>
-            <li><a href="images/slidshow-relax.jpg"><img src="images/slidshow-relax.jpg" alt="リラックスの写真"></a></li>
-          </ul>
-        </div>
-        <!--/.loopSlider--> 
-        
+      <div class="hotel"><img src="images/hotel.jpg" alt="リゾートホテルの写真">
+        <div class="spa-entrance"><img src="images/spa-entrance.jpg" alt="スパの入り口の写真"></div>
       </div>
     </div>
-  </main>
+    <div class="shisetu">
+      
+      <h3><a id="page-facility">Facilities</a></h3>
+      <p class="description">施設</p>
+      <p>STC SPAは、美しい客室、ダイニングSTC Terrace、ジャグジー付き温水プール、サウナ、トリートメントルームが完備されています。</p>
+      <section > <img src="images/treatment-room.jpg" alt="トリートメント室">
+        <h4>Treatment room</h4>
+        <p class="shisetu-image">トリートメント室</p>
+      </section>
+      <section > <img src="images/jacuzzi.jpg" alt="ジャグジー付き温水プール">
+        <h4>Pool,Jaccuzzi</h4>
+        <p class="shisetu-image">温水プール、ジャグジー</p>
+      </section>
+      <section > <img src="images/sauna.jpg" alt="サウナ">
+        <h4>Sauna</h4>
+        <p class="shisetu-image">サウナ</p>
+      </section>
+      <div class="booking"><a class="hvr-sweep-to-right" href="contact.html">予約する</a></div>
+    </div>
+    <div class="keiken">
+     
+      <h3>Experience</h3>
+      <p class="description">経験</p>
+      
+      
+      <!--スライドショー--> 
+      <div class="loopSlider">
+<ul>
+              <!--<li><a href="http://www.black-flag.net/"><img src="img/photo1.jpg" alt=""></a></li>
+<li><a href="https://www.google.co.jp/"><img src="img/photo2.jpg" alt=""></a></li>
+<li><a href="https://www.yahoo.co.jp/"><img src="img/photo3.jpg" alt=""></a></li>-->
+<li><img src="images/slidshow-spa.jpg" alt=""></li>
+<li><img src="images/slideshow-sauna.jpg" alt=""></li>
+<li><img src="images/slidshow-aroma.jpg" alt=""></li>
+<li><img src="images/slidshow-footspa.jpg" alt=""></li>
+<li><img src="images/slidshow-towle.jpg" alt=""></li>
+<li><img src="images/slidshow-pool.jpg" alt=""></li>
+<li><img src="images/slidshow-relax.jpg" alt=""></li>
+</ul>
+</div>
+<!--/.loopSlider-->
+  
+      
+      
+      
+      </div>
+    </div>
+    </main>
   <!-- InstanceEndEditable -->
   <footer>
     <h1><a href="index.html"><img src="images/logo.png" alt="スパのロゴ"></a></h1>
@@ -265,7 +293,8 @@ $(function(){
     </nav>
     <div class="tail">
       <p><small>&copy;<span>2020</span> STC SPA</small></p>
-      <div class="button"><a class="hvr-sweep-to-right" href="contact.html">CONTACT</a> </div>
+      <div class="button"><a class="hvr-sweep-to-right" href="contact.html">CONTACT</a>
+      </div>
     </div>
   </footer>
 </div>

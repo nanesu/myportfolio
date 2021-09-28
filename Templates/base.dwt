@@ -1,21 +1,23 @@
 <!doctype html>
-<html>
-<head>
+<html><head>
 <meta charset="UTF-8">
-<link rel="icon" href="../images/favicon.ico">
 <!-- TemplateBeginEditable name="doctitle" -->
 <title>STCSPA</title>
 <!-- TemplateEndEditable -->
 <link rel="stylesheet" href="../css/reset.css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/hover-min.css">
+<link rel="stylesheet" href="../css/hover-min.css"> 
 <link rel="stylesheet" href="../css/hamburger-menu.css">
 <link rel="stylesheet" href="../css/style.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
-<script src="../js/hamburger-menu.js"></script> 
 
-<!--slideshow--> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="../js/hamburger-menu.js"></script>  
+  
+  
+ 
+ <!--slideshow-->
 <script>
 $(function(){
     let setElm = $('.loopSlider'),
@@ -162,6 +164,12 @@ $(function(){
     });
 });
 </script>
+  
+  
+  
+  
+  
+  
 <!-- TemplateBeginEditable name="head" -->
 <!-- TemplateEndEditable -->
 <!-- TemplateParam name="class" type="text" value="home" -->
@@ -170,21 +178,31 @@ $(function(){
 <div class="page">
   <header>
     <h1><a href="../index.html"><img src="../images/logo.png" alt="spaのロゴ"></a></h1>
-    <p>MENU</p>
     
-    <!-- ハンバーガーメニュー -->
-    <button class="hamburger-button"></button>
+      <p>MENU</p>
+     
+   <!-- ハンバーガーメニュー -->
+<button class="hamburger-button"></button>
+
+<!-- ナビゲーション -->
+<nav class="hamburger-nav">
+  <ul>
+    <li><a href="../index.html">HOME</a></li>
+    <li><a href="index.html#page-facility">FACILITY</a></li>
+    <li><a href="../menu.html">MENU</a></li>
+    <li><a href="../access.html">ACCESS</a></li>
+    <li><a class="hvr-sweep-to-right" href="../contact.html">CONTACT</a></li>
+  </ul>
+</nav>
     
-    <!-- ナビゲーション -->
-    <nav class="hamburger-nav">
-      <ul>
-        <li><a href="../index.html">HOME</a></li>
-        <li><a href="index.html#page-facility">FACILITY</a></li>
-        <li><a href="../menu.html">MENU</a></li>
-        <li><a href="../access.html">ACCESS</a></li>
-        <li><a class="hvr-sweep-to-right" href="../contact.html">CONTACT</a></li>
-      </ul>
-    </nav>
+    
+    
+    
+    
+    
+    
+    
+    
   </header>
   <!-- TemplateBeginEditable name="メイン領域" -->
   <main>
@@ -228,7 +246,8 @@ $(function(){
         <h4>Sauna</h4>
         <p class="shisetu-image">サウナ</p>
       </section>
-      <div class="booking"><a class="hvr-sweep-to-right" href="../contact.html">予約する</a> </div>
+      <div class="booking"><a class="hvr-sweep-to-right" href="../contact.html">予約する</a>
+      </div>
     </div>
     <div class="keiken">
       <h3>Experience</h3>
@@ -236,17 +255,21 @@ $(function(){
       <!--スライドショー-->
       <div class="loopSlider">
         <ul>
-          <li><img src="images/slidshow-spa.jpg" alt="スパの写真"></li>
-          <li><img src="images/slideshow-sauna.jpg" alt="サウナの写真"></li>
-          <li><img src="images/slidshow-aroma.jpg" alt="アロマの写真"></li>
-          <li><img src="images/slidshow-footspa.jpg" alt="フットスパの写真"></li>
-          <li><img src="images/slidshow-towle.jpg" alt="アメニティーの写真"></li>
-          <li><img src="images/slidshow-pool.jpg" alt="プールの写真"></li>
-          <li><img src="images/slidshow-relax.jpg" alt="リラックスの写真"></li>
-        </ul>
+          <!--<li><a href="http://www.black-flag.net/"><img src="img/photo1.jpg" alt=""></a></li>
+<li><a href="https://www.google.co.jp/"><img src="img/photo2.jpg" alt=""></a></li>
+<li><a href="https://www.yahoo.co.jp/"><img src="img/photo3.jpg" alt=""></a></li>-->
+<li><img src="images/slidshow-spa.jpg" alt=""></li>
+<li><img src="images/slideshow-sauna.jpg" alt=""></li>
+<li><img src="images/slidshow-aroma.jpg" alt=""></li>
+<li><img src="images/slidshow-footspa.jpg" alt=""></li>
+<li><img src="images/slidshow-towle.jpg" alt=""></li>
+<li><img src="images/slidshow-pool.jpg" alt=""></li>
+<li><img src="images/slidshow-relax.jpg" alt=""></li>
+</ul>
+</div>
+        
       </div>
-    </div>
-    <!--/.loopSlider--> 
+      <!--/.loopSlider--> 
     
   </main>
   <!-- TemplateEndEditable -->
@@ -262,7 +285,8 @@ $(function(){
     </nav>
     <div class="tail">
       <p><small>&copy;<span>2020</span> STC SPA</small></p>
-      <div class="button"><a class="hvr-sweep-to-right" href="../contact.html">CONTACT</a> </div>
+      <div class="button"><a class="hvr-sweep-to-right" href="../contact.html">CONTACT</a>
+      </div>
     </div>
   </footer>
 </div>
